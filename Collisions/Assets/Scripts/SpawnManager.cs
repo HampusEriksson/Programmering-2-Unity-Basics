@@ -4,16 +4,30 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    public GameObject enemy;
+    public GameObject[] enemies;
+    private float spawnDelay = 3f;
     // Start is called before the first frame update
     void Start()
     {
-        InvokeRepeating("SpawnEnemy", 0.5f, 3f);
+        Invoke("SpawnEnemy", 0.5f);
     }
 
     void SpawnEnemy()
     {
-        Instantiate(enemy, GetRandomSpawnPoint(), enemy.transform.rotation);
+        int index = Random.Range(0, enemies.Length);
+        Instantiate(enemies[index], GetRandomSpawnPoint(), enemies[index].transform.rotation);
+        spawnDelay *= 0.5f;
+
+        // Samma som if nedan
+        Mathf.Clamp(spawnDelay, 0.2f, spawnDelay);
+
+        // Samma som Clamp ovan
+        if (spawnDelay < 0.2f)
+        {
+            spawnDelay = 0.2f;
+        }
+
+        Invoke("SpawnEnemy", spawnDelay);
     }
 
     private Vector3 GetRandomSpawnPoint()
