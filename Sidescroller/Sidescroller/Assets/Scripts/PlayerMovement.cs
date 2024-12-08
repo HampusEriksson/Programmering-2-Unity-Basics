@@ -12,11 +12,11 @@ public class PlayerMovement : MonoBehaviour
         float moveX = Input.GetAxis("Horizontal");
 
         Vector3 move = new Vector3(moveX, 0f, 0f);
-        transform.Translate(move * speed * Time.deltaTime);
+        transform.Translate(move * speed * Time.deltaTime * Settings.gameSpeed);
 
         if (transform.position.x < -26f)
         {
-            transform.position = new Vector3(-26f, 0f, 0f);
+            transform.position = new Vector3(-26f, 0f, -0.1f);
         }
     }
 
